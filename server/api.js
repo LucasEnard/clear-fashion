@@ -45,7 +45,6 @@ app.get('/products/search', async (request, response) => {
   if (brand != 'all') 
     db_request['brand'] = brand;
   if (price >= 0) 
-    //db_request['price'] = {'$lte' : price};
     db_request['price'] = {'$gt' : 0.75*price,'$lt' :1.25*price };
 
   const product = await db.find_limit(db_request, limit);

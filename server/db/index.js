@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const MONGODB_DB_NAME = 'clearfashion';
 const MONGODB_COLLECTION = 'products';
-const MONGODB_URI = "mongodb+srv://admin:admin@cluster0.ffywv.mongodb.net/clearfashion?retryWrites=true&w=majority"
+const MONGODB_URI = "mongodb+srv://admin:admin@cluster0.ffywv.mongodb.net/products?retryWrites=true&w=majority"
 
 let client = null;
 let database =  null;
@@ -69,6 +69,25 @@ module.exports.find = async query => {
     return result;
   } catch (error) {
     console.error('🚨 find in db', error);
+    return null;
+  }
+};
+
+/**
+ * Find products based on query with limit
+ * @param  {Array}  query
+ * @param   {int}   limit 
+ * @return {Array}
+ */
+ module.exports.find_limit = async (query, limit) => {
+  try {
+    const db = await getDB();
+    const collection = db.collection(MONGODB_COLLECTION);
+    const result = await collection.find(query).limit(limit).toArray();
+
+    return result;
+  } catch (error) {
+    console.error('🚨 collection.find...', error);
     return null;
   }
 };

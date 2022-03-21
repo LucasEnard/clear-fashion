@@ -138,7 +138,7 @@ const setAllLists = ({result, meta}) => {
 const fetchProducts = async (size = 12) => {
 	try {
 		const response = await fetch(
-			`https://clear-fashion-api.vercel.app?size=${size}`
+			`https://clear-fashion-pearl.vercel.app/products/search?size=${size}`
 		);
 		const body = await response.json();
 
@@ -182,8 +182,8 @@ const renderProducts = products => {
 		}
 		template += `
 		<tr>
-			<td><img src="${product.photo}" width="150"></td>
-			<td><a href="${product.link}" target="_blank">${product.name}</a></td>
+			<td><img src="${product.image}" width="150"></td>
+			<td><a href="${product.url}" target="_blank">${product.name}</a></td>
 			<td>${product.price}€</td>
 			<td>${product.brand}</td>
 			<td>${product.released}</td>
@@ -296,8 +296,8 @@ const renderBrands = (currentBrandIndex) => {
 		const product = products.filter(p => {return p.uuid == uuid;})[0];
 		template += `
 		<tr>
-			<td><img src="${product.photo}" width="150"></td>
-			<td><a href="${product.link}" target="_blank">${product.name}</a></td>
+			<td><img src="${product.image}" width="150"></td>
+			<td><a href="${product.url}" target="_blank">${product.name}</a></td>
 			<td>${product.brand}</td>
 			<td>${product.price}€</td>
 			<td>${product.released}</td>
@@ -337,8 +337,9 @@ const render = (products, pagination) => {
  */
 selectShow.addEventListener('change', event => {
 	currentPagination.currentPage = 1;
-	currentPagination.pageSize = parseInt(event.target.value);
-	setCurrentProducts(parseInt(event.target.value));
+	currentPagination.pageSize = event.target.value;
+	//setCurrentProducts(event.target.value);
+	setCurrentProducts(event.target.value);
 	render(currentProducts, currentPagination);
 });
 

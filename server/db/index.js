@@ -79,12 +79,11 @@ module.exports.find = async query => {
  * @param   {int}   limit 
  * @return {Array}
  */
- module.exports.find_limit = async (query, limit) => {
+ module.exports.find_limit = async (query,currentPage,limit) => {
   try {
     const db = await getDB();
     const collection = db.collection(MONGODB_COLLECTION);
-    const result = await collection.find(query).limit(limit).toArray();
-
+    const result = await collection.find(query).skip(limit*(currentPage-1)).limit(currentPage*limit).toArray();
     return result;
   } catch (error) {
     console.error('🚨 collection.find...', error);

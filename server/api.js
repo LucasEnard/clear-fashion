@@ -25,9 +25,15 @@ app.get('/', (request, response) => {
 app.get('/products/search', async (request, response) => {
   let limit;
   if (request.query.limit == undefined) 
-    limit = 10;
+    limit = 12;
   else 
     limit = parseInt(request.query.limit);
+
+  let currentPage;
+  if (request.query.page == undefined) 
+  currentPage = 1;
+  else 
+  currentPage = parseInt(request.query.page);
 
   let brand;
   if (request.query.brand == undefined) 
@@ -47,8 +53,11 @@ app.get('/products/search', async (request, response) => {
   if (price >= 0) 
     db_request['price'] = {'$gt' : 0.75*price,'$lt' :1.25*price };
 
-  const product = await db.find_limit(db_request, limit);
-  response.status(200).json({'limit' : limit, 'total' : product.length, 'result' : product});
+  const product = await db.find_limit(db_request,currentPage,limit);
+
+  const nb_tot = 690;
+  pageCount = Math.ceil(nb_tot/limit);
+  response.status(200).json({'success':true,'data' : {'result':product,'meta':{'currentPage':currentPage,'pageCount':pageCount,'pageSize':limit,'count':nb_tot}}});
 });
 
 app.get('/products/:id', async (request, response) => {

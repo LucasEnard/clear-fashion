@@ -30,16 +30,22 @@ app.get('/products/search', async (request, response) => {
     limit = parseInt(request.query.limit);
 
   let currentPage;
-  if (request.query.page == undefined) 
-  currentPage = 1;
+  if (request.query.currentPage == undefined) 
+    currentPage = 1;
   else 
-  currentPage = parseInt(request.query.page);
+    currentPage = parseInt(request.query.currentPage);
 
   let brand;
   if (request.query.brand == undefined) 
     brand = 'all';
   else 
     brand = request.query.brand;
+
+  let sort;
+  if (request.query.sort == undefined) 
+    sort = -1;
+  else 
+    sort = request.query.sort;
 
   let price;
   if (request.query.price == undefined || request.query.price == 'all') 
@@ -53,7 +59,7 @@ app.get('/products/search', async (request, response) => {
   if (price >= 0) 
     db_request['price'] = {'$gt' : 0.75*price,'$lt' :1.25*price };
 
-  const product = await db.find_limit(db_request,currentPage,limit);
+  const product = await db.find_limit(db_request,currentPage,limit,sort);
 
   const nb_tot = 690;
   pageCount = Math.ceil(nb_tot/limit);

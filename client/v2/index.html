@@ -37,7 +37,7 @@
       </div>
       <div id="filters">
 		<div id="box-price">
-			<label for="price-check">By reasonable price:</label>
+			<label for="price-check">By price:</label>
 			<input type="checkbox" id="price-check">
 		</div>
 		<div id="box-released">
@@ -46,7 +46,12 @@
 		</div>
         <div id="brand">
           <label for="brand-select">By brands:</label>
-          <select name="brand" id="brand-select"> </select>
+          <select name="brand" id="brand-select">
+            <option value="all">All</option>
+            <option value="dedicated">Dedicated</option>
+            <option value="montlimart">Montlimart</option>
+            <option value="adresse paris">adresse paris</option>
+          </select>
         </div>
       </div>
       <div id="sort">
@@ -56,7 +61,7 @@
           <option value="price-desc">Expensive</option>
           <option value="date-asc">Recently released</option>
           <option value="date-desc">Anciently released</option>
-		  <option value="fav">Favorites</option>
+		    <option value="fav">Favorites</option>
         </select>
       </div>
     </section>
